@@ -23,9 +23,9 @@ Pipeline for metrics obtention for 8M our model
 **1. Train 8M esm model**
    
    1.Log into your Weights and Biases account to track model loss:
-     
+     ```ruby
      wandb login <your-API-key>
-
+     ```
    2.Execute esm2_partitioned_execution_8M.sh as executes esm2_job_splitter that splits the model execution into 10        splits. Then each job will execute the esm2_model.py
 
       sbatch esm2_partitioned_execution_8M.sh
