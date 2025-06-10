@@ -30,46 +30,63 @@ Pipeline for metrics obtention for 8M our model
    
    2.Execute esm2_partitioned_execution_8M.sh as executes esm2_job_splitter that splits the model execution into 10        splits. Then each job will execute the esm2_model.py
 
+   ```ruby
       sbatch esm2_partitioned_execution_8M.sh
+   ```
 
 **2. Obtain train embeddings**
 
    1. Execute count_sequences.py to know the number of sequences you need to specify in                                     parallelize_embedding_extraction_8M_our_model.sh
-        
+
+      ```ruby     
          python count_sequences.py
+      ```
         
-   2. Execute parallelize_embedding_extraction_8M_our_model.sh as has all the hyperparameters prepared to extract           the training embeddings by splitting dataset into different jobs.
+   3. Execute parallelize_embedding_extraction_8M_our_model.sh as has all the hyperparameters prepared to extract           the training embeddings by splitting dataset into different jobs.
 
+      ```ruby
          sbatch parallelize_embedding_extraction_8M_our_model.sh
+      ```
+   5. Execute per_job_compress_train_embeddings_8M_our_model.sh as has all the hyperparameters to merge all the             embeddings created by 8M our model into 10 numpy arrays.
 
-   3. Execute per_job_compress_train_embeddings_8M_our_model.sh as has all the hyperparameters to merge all the             embeddings created by 8M our model into 10 numpy arrays.
-
+      ```ruby
          sbatch per_job_compress_train_embeddings_8M_our_model.sh
+      ```
+      
+   7. Execute joining_jobs_compress_train_embeddings_8M.sh as has all the hyperparameters to merge the 10 numpy             arrays into 1
 
-   4. Execute joining_jobs_compress_train_embeddings_8M.sh as has all the hyperparameters to merge the 10 numpy             arrays into 1
-
+      ```ruby
          sbatch joining_jobs_compress_train_embeddings_8M.sh
-
+      ```
+      
 **3. Obtain validation and test embeddings**
 
    1. Execute validation_testing_embedding_8M.sh with the hyperparameters it has.
 
+      ```ruby
          sbatch validation_testing_embedding_8M.sh
-   
+      ```
+
 **4. Train the autoencoder**
 
    1. Once you have the array that contains all the embeddings, run autoencoder_parallelized_8M.sh to train the          autoencoder with training embeddings.
 
+      ```ruby
          sbatch autoencoder_parallelized_8M.sh
+      ```
       
 **5. Compute metrics**
 
    1. Execute FCD_embeddings.sh. Note: You need to change the input dimension to the corresponding embedding             dimension. For example for 8M is 320.
 
+      ```ruby
          sbatch FCD_embeddings.sh
-         
-   2. Execute perplexity_calculation_our_model.sh
+      ```   
+   
+   3. Execute perplexity_calculation_our_model.sh
 
+      ```ruby
          sbatch perplexity_calculation_our_model.sh
-
+      ```
+   
    In both output files you will obtain the metrics results for 8M our model.
