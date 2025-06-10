@@ -18,8 +18,6 @@ conda env create -f requirements.yaml
 
 📁**Repository structure** 
 
-models/: Baseline and our models
-
 data/: Subset datasets used in our research.
 
 code/: Code for the autoencoder, embeddings obtention, esm2 model, metrics obtention and plots.
