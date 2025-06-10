@@ -96,3 +96,9 @@ Pipeline for metrics obtention for 8M our model
       ```
    
    In both output files you will obtain the metrics results for 8M our model.
+# Acknowledgments
+
+<img width="120" alt="esci" src="https://github.com/user-attachments/assets/07e66ace-1bbf-443b-b7d6-6287c564e2a9" />
+<img width="140" alt="nbd" src="https://github.com/user-attachments/assets/41404ba6-3a92-49d9-ba05-aba5a54b0f76" />
+
+
