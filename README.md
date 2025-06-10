@@ -27,14 +27,14 @@ Pipeline for metrics obtention for 8M our model
 
    2.Execute esm2_partitioned_execution_8M.sh as executes esm2_job_splitter that splits the model execution into 10        splits. Then each job will execute the esm2_model.py
 
-     sbatch esm2_partitioned_execution_8M.sh
+      sbatch esm2_partitioned_execution_8M.sh
 
 **2. Obtain train embeddings**
 
    1. Execute count_sequences.py to know the number of sequences you need to specify in                
         parallelize_embedding_extraction_8M_our_model.sh
         
-        python count_sequences.py
+         python count_sequences.py
         
    2. Execute parallelize_embedding_extraction_8M_our_model.sh as has all the hyperparameters prepared to extract           the training embeddings by splitting dataset into different jobs.
 
