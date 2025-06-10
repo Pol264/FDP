@@ -21,6 +21,7 @@ code/: Code for the autoencoder, embeddings obtention, esm2 model, metrics obten
 Pipeline for metrics obtention for 8M our model
 
 **1. Train 8M esm model**
+   
    1.Log into your Weights and Biases account to track model loss:
      wandb login <your-API-key>
 
@@ -41,4 +42,5 @@ Pipeline for metrics obtention for 8M our model
   3. Execute joining_jobs_compress_train_embeddings_8M.sh as has all the hyperparameters to merge the 10 numpy arrays      into 1
 
      sbatch joining_jobs_compress_train_embeddings_8M.sh
-     
+
+   **3. Obtain validation and test embeddings**
