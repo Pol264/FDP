@@ -23,6 +23,7 @@ Pipeline for metrics obtention for 8M our model
 **1. Train 8M esm model**
    
    1.Log into your Weights and Biases account to track model loss:
+     
      wandb login <your-API-key>
 
    2.Execute esm2_partitioned_execution_8M.sh as executes esm2_job_splitter that splits the model execution into 10        splits. Then each job will execute the esm2_model.py
@@ -31,22 +32,21 @@ Pipeline for metrics obtention for 8M our model
 
 **2. Obtain train embeddings**
 
-   1. Execute count_sequences.py to know the number of sequences you need to specify in                
-        parallelize_embedding_extraction_8M_our_model.sh
+   1. Execute count_sequences.py to know the number of sequences you need to specify in                                     parallelize_embedding_extraction_8M_our_model.sh
         
          python count_sequences.py
         
    2. Execute parallelize_embedding_extraction_8M_our_model.sh as has all the hyperparameters prepared to extract           the training embeddings by splitting dataset into different jobs.
 
-        sbatch parallelize_embedding_extraction_8M_our_model.sh
+         sbatch parallelize_embedding_extraction_8M_our_model.sh
 
    3. Execute per_job_compress_train_embeddings_8M_our_model.sh as has all the hyperparameters to merge all the             embeddings created by 8M our model into 10 numpy arrays.
 
-        sbatch per_job_compress_train_embeddings_8M_our_model.sh
+         sbatch per_job_compress_train_embeddings_8M_our_model.sh
 
    4. Execute joining_jobs_compress_train_embeddings_8M.sh as has all the hyperparameters to merge the 10 numpy             arrays into 1
 
-        sbatch joining_jobs_compress_train_embeddings_8M.sh
+         sbatch joining_jobs_compress_train_embeddings_8M.sh
 
 **3. Obtain validation and test embeddings**
 
@@ -58,7 +58,7 @@ Pipeline for metrics obtention for 8M our model
 
    1. Once you have the array that contains all the embeddings, run autoencoder_parallelized_8M.sh to train the          autoencoder with training embeddings.
 
-      sbatch autoencoder_parallelized_8M.sh
+         sbatch autoencoder_parallelized_8M.sh
       
 **5. Compute metrics**
 
