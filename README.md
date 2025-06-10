@@ -1,22 +1,30 @@
-# Applicabiliy domain for protein language models
+# Applicabiliy domain for protein language models 
 This repository contains the code and datasets developed for my Bachelor’s Thesis, completed within the Bachelor’s Degree in Bioinformatics (BDBI) at ESCI-UPF in Barcelona, in collaboration with Nostrum Biodiscovery.
 
 
-# Project Overview
+# 👓 Project Overview 
 This work explores the applicability domain of ESM2 protein language models (pLM) trained with UniRef dataset and tested with MGnify sequences grouped into homology bins (40–60%, 60–80%, etc.).Our objective is assesing the influence of model size (8M,35M,150M and 650M parameters), dataset redundancy (UniRef50 vs UniRef90) and training time. To evaluate it, different metrics have been used: Cosine similarity, Fréchet ChemNet Distance, Mahalanobis distance, Perplexity score and the autoencoder-based unfamiliarity score.
 
-# Setup
 
-**Requirements**
+# 🧑‍💻 Setup 
+
+📦**Requirements** 
+
 Install the required dependencies from requirements.yaml:
-conda env create -f requirements.yaml
 
-**Repository structure**
+```ruby
+conda env create -f requirements.yaml
+```
+
+📁**Repository structure** 
+
 models/: Baseline and our models
+
 data/: Subset datasets used in our research.
+
 code/: Code for the autoencoder, embeddings obtention, esm2 model, metrics obtention and plots.
 
-# Workflow
+# 🤖 Workflow 
 
 Pipeline for metrics obtention for 8M our model
 
