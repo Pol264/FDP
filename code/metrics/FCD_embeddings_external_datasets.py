@@ -26,7 +26,6 @@ def load_pretrained_autoencoder(weights_path="autoencoder_optimized_650M_baselin
     model = ESMEmbeddingAutoencoder().to(device)
     state_dict = torch.load(weights_path)
 
-    # Handle 'DataParallel' saved state_dict keys
     new_state_dict = {}
     for k, v in state_dict.items():
         new_key = k.replace('_orig_mod.module.', '')
@@ -80,7 +79,6 @@ def compute_unfamiliarity(model, embeddings):
 
 
 print("loading embeddings train",flush=True)
-#embeddings_train = np.load("/leonardo_scratch/large/userexternal/pjardiya/jobs_embeddings/all_combined/8M_embedding_all_all.npy")
 embeddings_train = np.load("/leonardo_scratch/large/userexternal/pjardiya/jobs_embeddings/all_combined/650M_embedding_all_all.npy", mmap_mode='r')
 print("loading_embeddigs_train_finished",flush=True)
 embeddings_secondary_structure = np.load("/leonardo_work/EUHPC_A05_043/TFG_pjardi/datasets_prove_metrics/embeddings_secondary_structure_650M.npz")['embeddings']
@@ -118,7 +116,6 @@ print(f"remote_homology FCD: {calculate_fcd(mu_train, cov_train, mu_remote_homol
 cosine_sim_remote_homology = cosine_similarity([np.mean(embeddings_train, axis=0)],[np.mean(embeddings_remote_homology, axis=0)])[0][0]
 print(f"remote_homology Cosine Similarity: {cosine_sim_remote_homology:.4f}",flush=True)
 
-#print(f"Validation Cosine Similarity: {np.mean(cosine_similarity(embeddings_train, embeddings_val)):.4f}")
 print(f"remote_homology Mahalanobis: {np.mean([distance.mahalanobis(v, mu_train, cov_inv_train) for v in embeddings_remote_homology]):.4f}")
 print(f"remote_homology Unfamiliarity: {np.mean(compute_unfamiliarity(autoencoder, embeddings_remote_homology)):.4f}")
 print("650M")
