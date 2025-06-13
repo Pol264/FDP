@@ -7,11 +7,9 @@ import time
 import os
 from concurrent.futures import ThreadPoolExecutor
 from esm2_model import ESM2
-# Set device
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"Using device: {device}", flush=True)
 
-# Load model
 alphabet = esm.Alphabet.from_architecture("ESM-1b")
 batch_converter = alphabet.get_batch_converter()
 esm_model = ESM2(num_layers=12, embed_dim=480, attention_heads=20, alphabet=alphabet)
@@ -19,7 +17,6 @@ state_dict = torch.load("/leonardo_work/EUHPC_A05_043/TFG_pjardi/models/35M_mode
 esm_model.load_state_dict(state_dict)
 esm_model.to(device).half().eval()
 
-# Load sequences
 def load_sequences_from_fasta_gz(filepath, max_length=512):
     with gzip.open(filepath, 'rt') as file:
         return [str(record.seq) for record in SeqIO.parse(file, 'fasta') if len(record.seq) <= max_length]
@@ -28,12 +25,10 @@ def load_sequences_from_fasta(filepath, max_length=512):
     with open(filepath, 'rt') as file:
         return [str(record.seq) for record in SeqIO.parse(file, 'fasta') if len(record.seq) <= max_length]
 
-# Tokenization (parallel)
 def tokenize_batch(data):
     _, _, batch_tokens = batch_converter(data)
     return batch_tokens
 
-# Embedding function
 def compute_embeddings(sequences, repr_layer, batch_size=16, num_workers=8):
     results = []
     data = [(f"seq_{i}", seq) for i, seq in enumerate(sequences)]
@@ -52,7 +47,6 @@ def compute_embeddings(sequences, repr_layer, batch_size=16, num_workers=8):
                     results.append(emb)
     return np.vstack(results)
 
-# Run embedding generation
 if __name__ == '__main__':
     os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
