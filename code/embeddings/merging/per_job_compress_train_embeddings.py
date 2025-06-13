@@ -1,4 +1,3 @@
-# join_job_embeddings.py
 import argparse
 import os
 import numpy as np
