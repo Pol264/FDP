@@ -26,7 +26,6 @@ def load_pretrained_autoencoder(weights_path="autoencoder_optimized_150M_our_mod
     model = ESMEmbeddingAutoencoder().to(device)
     state_dict = torch.load(weights_path)
 
-    # Handle 'DataParallel' saved state_dict keys
     new_state_dict = {}
     for k, v in state_dict.items():
         new_key = k.replace('_orig_mod.module.', '')
@@ -80,7 +79,6 @@ def compute_unfamiliarity(model, embeddings):
 
 
 print("loading embeddings train",flush=True)
-#embeddings_train = np.load("/leonardo_scratch/large/userexternal/pjardiya/jobs_embeddings/all_combined/8M_embedding_all_all.npy")
 embeddings_train = np.load("/leonardo_scratch/large/userexternal/pjardiya/jobs_embeddings/all_combined/150M_our_model_embedding_all_all.npy", mmap_mode='r')
 print("loading_embeddigs_train_finished",flush=True)
 embeddings_val = np.load("/leonardo_work/EUHPC_A05_043/TFG_pjardi/uniref50_dataset/embeddings_150M_our_model_validation_and_testing/embeddings_validation.npz")['embeddings']
@@ -97,7 +95,6 @@ print(f"Validation FCD: {calculate_fcd(mu_train, cov_train, mu_val, cov_val):.4f
 cosine_sim = cosine_similarity([np.mean(embeddings_train, axis=0)],[np.mean(embeddings_val, axis=0)])[0][0]
 print(f"Validation Cosine Similarity: {cosine_sim:.4f}",flush=True)
 
-#print(f"Validation Cosine Similarity: {np.mean(cosine_similarity(embeddings_train, embeddings_val)):.4f}")
 print(f"Validation Mahalanobis: {np.mean([distance.mahalanobis(v, mu_train, cov_inv_train) for v in embeddings_val]):.4f}")
 print(f"Validation Unfamiliarity: {np.mean(compute_unfamiliarity(autoencoder, embeddings_val)):.4f}")
 #perplexity_val = compute_perplexity(embeddings_val, mu_train, cov_train)
@@ -124,7 +121,6 @@ for fname in test_files:
     fcd = calculate_fcd(mu_train, cov_train, mu_test, cov_test)
     cosine_sim = cosine_similarity([np.mean(embeddings_train, axis=0)],[np.mean(test_embeddings, axis=0)])[0][0]
 
-    #cosine_sim = np.mean(cosine_similarity(embeddings_train, test_embeddings))
     mahal = np.mean([distance.mahalanobis(v, mu_train, cov_inv_train) for v in test_embeddings])
     unfam = np.mean(compute_unfamiliarity(autoencoder, test_embeddings))
     #perplexity_test = compute_perplexity(test_embeddings, mu_train, cov_train)
