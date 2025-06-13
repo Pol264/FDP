@@ -1,4 +1,3 @@
-# join_all_jobs.py
 import numpy as np
 import argparse
 import os
